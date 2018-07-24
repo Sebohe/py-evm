@@ -1,4 +1,6 @@
-.PHONY: clean-pyc clean-build docs
+.PHONY: clean-pyc clean-build docs docker
+
+version=$(shell grep .bumpversion.cfg | cut -d' ' -f3)
 
 help:
 	@echo "clean-build - remove build artifacts"
@@ -66,3 +68,6 @@ release-trinity: clean
 sdist: clean
 	python setup.py sdist bdist_wheel
 	ls -l dist
+
+docker:
+	docker build -f Dockerfile -t trinity:latest -t trinity:$(version) .
